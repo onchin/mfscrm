@@ -2,6 +2,7 @@ from django.shortcuts import render
 from .models import *
 from .forms import *
 from django.shortcuts import render, get_object_or_404
+from django.shortcuts import redirect
 
 
 def customer_list(request):
@@ -24,4 +25,10 @@ def customer_edit(request, pk):
     else:
         # edit
         form = CustomerForm(instance=customer)
-    return render(request, 'crm/customer_list.html', {'form': form})
+    return render(request, 'crm/customer_edit.html', {'form': form})
+
+
+def customer_delete(request, pk):
+    customer = get_object_or_404(Customer, pk=pk)
+    customer.delete()
+    return redirect('crm:customer_list')
