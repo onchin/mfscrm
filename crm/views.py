@@ -47,9 +47,11 @@ def customer_delete(request, pk):
     return redirect('crm:customer_list')
 
 
+@login_required
+def service_list(request):
+    services = Service.objects.filter(created_date__lte=timezone.now())
+    return render(request, 'crm/service_list.html', {'services': services})
+
+
 # def login(request):
-#     return render(request, "crm/registration/login.html")
-#
-#
-# def logout(request):
-#     return render(request, "crm/home.html")
+#     return render(request, 'crm/registration/login.html')
